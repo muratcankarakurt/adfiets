@@ -2,20 +2,28 @@
 
 import { useActionState } from "react";
 import { joinWaitlist, type WaitlistState } from "@/app/actions";
+import { getTranslations, type Lang } from "@/lib/translations";
 
 const initialState: WaitlistState = { status: "idle" };
 
 export default function WaitlistForm({
   audience,
+  lang,
 }: {
   audience: "rider" | "advertiser";
+  lang: Lang;
 }) {
   const [state, formAction, pending] = useActionState(joinWaitlist, initialState);
+  const t = getTranslations(lang).form;
 
   if (state.status === "success") {
     return (
       <p className="rounded-lg bg-brand/10 px-4 py-3 text-sm font-medium text-brand-dark">
-        {state.message}
+        {state.code === "duplicate"
+          ? t.duplicate
+          : audience === "advertiser"
+            ? t.okAdvertiser
+            : t.okRider}
       </p>
     );
   }
@@ -28,7 +36,7 @@ export default function WaitlistForm({
           type="text"
           name="company"
           required
-          placeholder="Company name"
+          placeholder={t.company}
           className="rounded-lg border border-foreground/15 bg-white px-4 py-2.5 text-sm outline-none focus:border-brand"
         />
       )}
@@ -36,13 +44,13 @@ export default function WaitlistForm({
         type="email"
         name="email"
         required
-        placeholder="Email address"
+        placeholder={t.email}
         className="rounded-lg border border-foreground/15 bg-white px-4 py-2.5 text-sm outline-none focus:border-brand"
       />
       <input
         type="text"
         name="city"
-        placeholder="City (optional)"
+        placeholder={t.city}
         className="rounded-lg border border-foreground/15 bg-white px-4 py-2.5 text-sm outline-none focus:border-brand"
       />
       <button
@@ -51,13 +59,15 @@ export default function WaitlistForm({
         className="rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark disabled:opacity-60"
       >
         {pending
-          ? "Joining…"
+          ? t.pending
           : audience === "advertiser"
-            ? "Request advertising info"
-            : "Join the waitlist"}
+            ? t.submitAdvertiser
+            : t.submitRider}
       </button>
       {state.status === "error" && (
-        <p className="text-sm text-red-600">{state.message}</p>
+        <p className="text-sm text-red-600">
+          {state.code === "invalid_email" ? t.invalidEmail : t.serverError}
+        </p>
       )}
     </form>
   );

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "adfiets — rent a cargo e-bike, ads pay for your ride",
+  title: "adfiets — huur een elektrische bakfiets, advertenties betalen je rit",
   description:
-    "Cargo e-bike rental at a fraction of the market price. Local companies advertise on the bikes and cover the costs — you ride cheap.",
+    "Bakfiets huren voor een fractie van de marktprijs. Lokale bedrijven adverteren op de fietsen en dekken de kosten — jij rijdt goedkoop.",
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="nl"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

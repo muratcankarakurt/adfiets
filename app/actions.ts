@@ -3,9 +3,10 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 
+// Codes instead of messages so the client can render them in the active language.
 export type WaitlistState = {
   status: "idle" | "success" | "error";
-  message?: string;
+  code?: "ok" | "duplicate" | "invalid_email" | "server_error";
 };
 
 type WaitlistEntry = {
@@ -30,7 +31,7 @@ export async function joinWaitlist(
   const company = String(formData.get("company") ?? "").trim();
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return { status: "error", message: "Please enter a valid email address." };
+    return { status: "error", code: "invalid_email" };
   }
 
   const entry: WaitlistEntry = {
@@ -50,19 +51,13 @@ export async function joinWaitlist(
       // first entry — file doesn't exist yet
     }
     if (entries.some((e) => e.email === email && e.audience === audience)) {
-      return { status: "success", message: "You're already on the list — we'll be in touch!" };
+      return { status: "success", code: "duplicate" };
     }
     entries.push(entry);
     await writeFile(DATA_FILE, JSON.stringify(entries, null, 2));
   } catch {
-    return { status: "error", message: "Something went wrong. Please try again." };
+    return { status: "error", code: "server_error" };
   }
 
-  return {
-    status: "success",
-    message:
-      audience === "advertiser"
-        ? "Thanks! We'll reach out about advertising spots soon."
-        : "You're on the list! We'll let you know when bikes are available.",
-  };
+  return { status: "success", code: "ok" };
 }

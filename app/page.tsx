@@ -152,29 +152,53 @@ export default function Home() {
         <p className="mt-3 max-w-xl text-foreground/70">
           Indicative pricing — final rates will be announced at launch.
         </p>
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <div className="rounded-2xl border border-foreground/10 bg-white p-8">
-            <p className="text-sm font-semibold uppercase tracking-wide text-foreground/50">
-              Typical rental
-            </p>
-            <p className="mt-3 text-4xl font-bold">
-              €40<span className="text-lg font-medium text-foreground/50">/day</span>
-            </p>
-            <p className="mt-4 text-sm text-foreground/70">
-              You pay for the bike, the insurance, the maintenance — everything.
-            </p>
+        <div className="mt-10 rounded-2xl border border-foreground/10 bg-white p-8 md:p-10">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-baseline justify-between gap-4">
+              <p className="text-foreground/70">
+                What a cargo e-bike rental really costs
+                <span className="block text-sm text-foreground/50">
+                  bike, battery, insurance, maintenance
+                </span>
+              </p>
+              <p className="text-2xl font-bold whitespace-nowrap">
+                €40<span className="text-sm font-medium text-foreground/50">/day</span>
+              </p>
+            </div>
+            <div className="flex items-baseline justify-between gap-4">
+              <p className="text-foreground/70">
+                Covered by the advertiser on your cargo box
+                <span className="block text-sm text-foreground/50">
+                  their brand rides along — that&apos;s the whole deal
+                </span>
+              </p>
+              <p className="text-2xl font-bold whitespace-nowrap text-brand">
+                −€25<span className="text-sm font-medium text-brand/60">/day</span>
+              </p>
+            </div>
+            <div className="border-t border-dashed border-foreground/20 pt-4">
+              <div className="flex items-baseline justify-between gap-4">
+                <p className="text-lg font-semibold">You pay</p>
+                <p className="text-5xl font-bold text-brand-dark">
+                  €15<span className="text-lg font-medium text-brand-dark/60">/day</span>
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="rounded-2xl border-2 border-brand bg-brand/5 p-8">
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand-dark">
-              adfiets
-            </p>
-            <p className="mt-3 text-4xl font-bold text-brand-dark">
-              €15<span className="text-lg font-medium text-brand-dark/60">/day</span>
-            </p>
-            <p className="mt-4 text-sm text-foreground/70">
-              Advertisers cover the rest. Same bike, same freedom — you just
-              share the box with a brand.
-            </p>
+          {/* Split bar */}
+          <div className="mt-8">
+            <div className="flex h-4 w-full overflow-hidden rounded-full">
+              <div className="w-[62.5%] bg-brand" />
+              <div className="w-[37.5%] bg-accent" />
+            </div>
+            <div className="mt-2 flex justify-between text-sm">
+              <span className="font-medium text-brand-dark">
+                ● advertiser pays €25
+              </span>
+              <span className="font-medium text-accent">
+                you pay €15 ●
+              </span>
+            </div>
           </div>
         </div>
       </section>
